@@ -1,0 +1,130 @@
+section {
+    width: 98%;
+    height: 61%;
+    border: 1px solid #EBEBEB;
+    border-radius: 15px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.attendance_container {
+    width: 97.3%;
+    height: 94%;
+    padding: 0 15px 15px 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.attendance_insert_container {
+    width: 30%;
+    height: 100%;
+    margin-right: 20px;
+}
+.commute_container {
+    height: 50%;
+    margin-top: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.work_start, .work_end {
+    font-size: 40px;
+    font-weight: bold;
+    width: 50%;
+    height: 50%;
+    border: 1px solid #CCCCCC;
+    border-radius: 15px;
+    padding: 15px;
+}
+.work_start:hover, .work_end:hover {
+    background-color: #AAE0F8;
+    color: #FFFFFF;
+    border: 1px solid #AAE0F8;
+
+    cursor: pointer;
+}
+.significant_container {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.significant_label {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.significant_select {
+    font-size: 18px;
+    font-weight: bold;
+    width: 30%;
+    height: 50px;
+    border: 1px solid #666666;
+    padding: 10px 15px;
+}
+.significant_btn {
+    font-size: 18px;
+    font-weight: bold;
+    width: 30%;
+    height: 40px;
+    border: 1px solid #CCCCCC;
+    border-radius: 15px;
+    margin-left: 40px;
+    padding: 5px 10px;
+}
+.significant_btn:hover {
+    background-color: #AAE0F8;
+    color: #FFFFFF;
+    border: 1px solid #AAE0F8;
+
+    cursor: pointer;
+}
+.attendance_list {
+    width: 70%;
+    height: 100%;
+    border: 1px solid #CCCCCC;
+    border-radius: 15px;
+    padding: 10px;
+}
+.attendance_table {
+    width: 100%;
+    margin-top: 30px;
+    border: 1px solid #CCCCCC;
+}
+.attendance_table thead, .attendance_table tbody, .attendance_table tfoot {
+    text-align: center;
+}
+.attendance_table thead {
+    font-size: 17px;
+    font-weight: bold;
+}
+.attendance_table tr td {
+    height: 32px;
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+}
+.paging td a {
+    color: #000000;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    margin: 0 5px;
+}
+.paging td a div {
+    width: 45px;
+    border: 1px solid #CCCCCC;
+    border-radius: 15px;
+    padding: 5px 10px;
+
+    display: inline-block;
+}
+.paging td div:hover {
+    background-color: #AAE0F8;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}

@@ -1,0 +1,83 @@
+section {
+    width: 98%;
+    height: 61%;
+    border: 1px solid #EBEBEB;
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mail_container {
+    width: 97.3%;
+    height: 94%;
+    padding: 0 15px 15px 15px;
+    overflow-y: auto; /* 스크롤 추가 */
+    /*box-sizing: border-box;*/
+}
+
+.mail_btn {
+    margin-left: 4%;
+    padding: 3px 10px 10px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*게시판 메뉴*/
+.mail_btn input {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
+    margin-right: 25px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #1E90FF; /* 기본 버튼 색 */
+    color: white;
+}
+
+.mail_btn input:hover {
+    background-color: skyblue; /* 호버 색 */
+}
+
+.mail_btn input.selected {
+    background-color: #9AADEE; /* 선택된 버튼 색 */
+    color: white;
+    font-weight: bold;
+}
+
+.mail_list {
+    /*border: 1px solid black;*/
+}
+.mail_table {
+    width: 100%;
+}
+
+.mail_table thead, .mail_table tbody, .mail_table tfoot {
+    text-align: center;
+}
+.mail_table tr td {
+    /*border: 1px solid black;*/
+    padding: 10px;
+    border-bottom: 1px solid gainsboro;
+}
+.mail_table thead tr td {
+    font-size: 20px;
+    font-weight: bold;
+}
+.mail_detail {
+    color: black;
+    text-decoration: none;
+
+    display: block;
+}
+.mail_table tbody tr:hover .mail_detail {
+    color: #666666;
+}
+.paging td a {
+    color: black;
+    text-decoration: none;
+}
+.all_check, .one_check {
+    width: 30px;
+    height: 30px;
+}

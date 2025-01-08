@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIS : 자유게시판</title>
+  <link rel="stylesheet" href="/css/layout/base.css"/>
+  <link rel="stylesheet" href="/css/board/board_base.css"/>
+  <link rel="stylesheet" href="/css/board/board_main.css">
+  <script src="https://kit.fontawesome.com/ae15ba340d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="main">
+  <header th:replace="~{layout/header::header}"></header>
+  <nav th:replace="~{layout/nav::nav}"></nav>
+  <section>
+    <div class="mail_container">
+      <div class="mail_btn">
+        <input type="button" value="공지사항" class="board_one" onclick="selectButton(this, '/board_gj')">
+        <input type="button" value="자유게시판" class="board_two" onclick="selectButton(this, '/board_fr')">
+      </div>
+<!--      <div id="board_select_title">-->
+<!--        <span class="board_select_title_1">자유게시판</span>-->
+<!--      </div>-->
+
+      <div id="search_div">
+        <div id="search_div_2">
+          <form id="searchForm" method="get" action="/board_fr">
+            <div id="search_optin">
+              <select name="searchType" id="searchType" title="검색 유형 선택">
+                <option value="" th:selected="${searchType == ''}">전체 검색</option>
+                <option value="board_title" th:selected="${searchType == 'board_title'}">제목</option>
+                <option value="board_content" th:selected="${searchType == 'board_content'}">내용</option>
+                <option value="emp_id" th:selected="${searchType == 'emp_id'}">작성자</option>
+              </select>
+              <input type="text" name="keyword" id="keyword" class="searchBox" placeholder="검색어를 입력하시오" th:value="${keyword}">
+              <button class="search-btn" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="mail_list">
+        <table class="mail_table">
+          <thead>
+          <tr>
+            <th>번호</th>
+            <th class="th2">제목</th>
+            <th>글쓴이</th>
+            <th>조회수</th>
+            <th>등록일자</th>
+          </tr>
+          </thead>
+          <tr th:each="m: ${boardvolist.list}" th:if="${boardvolist.list != null}">
+            <td th:text="${m.board_num}"></td>
+            <td>
+              <a th:href="@{/fr_preview/{board_num}(board_num=${m.board_num})}" th:text="${m.board_title}"></a>
+            </td>
+            <td th:text="${m.emp_id}"></td>
+<!--            <td th:text="${emp_name}"></td>-->
+            <td th:text="${m.boardHits}"></td>
+            <td th:text="${m.getCreate_at()}"></td>
+          </tr>
+          <tr th:if="${boardvolist.list == null || #lists.isEmpty(boardvolist.list)}">
+            <td colspan="5">게시글이 없습니다.</td>
+          </tr>
+
+        </table>
+
+        <!-- 페이지네이션 -->
+        <div class="paging">
+          <!-- 첫 페이지 -->
+          <a th:href="@{/board_fr(page=1, keyword=${keyword}, searchType=${searchType})}">첫 페이지</a>
+
+          <!-- 이전 페이지 -->
+          <a th:href="@{/board_fr(page=${boardvolist.pagination.startPage - 1}, keyword=${keyword}, searchType=${searchType})}"
+             th:if="${boardvolist.pagination.existPrevPage}">이전 페이지</a>
+
+          <!-- 페이지 번호 -->
+          <span th:each="page : ${#numbers.sequence(boardvolist.pagination.startPage, boardvolist.pagination.endPage)}">
+      <a th:href="@{/board_fr(page=${page}, keyword=${keyword}, searchType=${searchType})}"
+         th:text="${page}"
+         th:classappend="${page == currentPage} ? 'on' : ''">
+      </a>
+    </span>
+
+          <!-- 다음 페이지 -->
+          <a th:href="@{/board_fr(page=${boardvolist.pagination.endPage + 1}, keyword=${keyword}, searchType=${searchType})}"
+             th:if="${boardvolist.pagination.existNextPage}" class="page_bt next">다음 페이지</a>
+
+          <!-- 마지막 페이지 -->
+          <a th:href="@{/board_fr(page=${boardvolist.pagination.totalPageCount}, keyword=${keyword}, searchType=${searchType})}"
+             th:if="${boardvolist.pagination.existNextPage}" class="page_bt last">마지막 페이지</a>
+        </div>
+      </div>
+
+      <div id="table_write_div">
+        <a href="/write_fr">
+          <button class="write_button" type="button"><i class="fa-solid fa-pen">글쓰기</i></button>
+        </a>
+      </div>
+
+    </div>
+
+  </section>
+  <footer th:replace="~{layout/footer::footer}"></footer>
+</div>
+
+</body>
+<script src="/js/board/board_main.js"></script>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/member_css/manager_pass_check.css"/>
+</head>
+<body>
+<div class="container">
+    <!-- 관리자 비밀번호 입력 -->
+    <form action="check_input_manager_pass" method="post">
+        <div id="manager_pass_check">
+            <div class="back_btn">
+                <button id="backBtn2"><i class="fa-solid fa-arrow-left"></i></button>
+            </div>
+            <div class="manager_pass_content">
+                <label for="input_manager_pass">관리자 비밀번호</label><br/>
+                <input type="password" name="manager_pass" id="input_manager_pass" required>
+            </div>
+            <div class="manager_pass_btn" id="manager_pass_btn">
+                <input type="submit" id="submit_pass" value="확인">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script>
+    document.getElementById('backBtn2').addEventListener("click",()=>{
+        history.go(-1);
+    })
+    document.getElementById('manager_pass_btn').addEventListener("click",()=>{
+        // 입력창 입력 내용 저장 변수.
+        let inputResult = document.getElementById('input_manager_pass').value;
+    })
+</script>
+</html>

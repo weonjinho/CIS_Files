@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사원이 정보를 추가할 필요가 있는 사원의 리스트</title>
+    <link rel="stylesheet" href="/css/layout/base.css">
+    <link rel="stylesheet" href="/css/member_css/employee_list.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="main">
+        <header th:replace="~{layout/header::header}"></header>
+        <section>
+            <div class="employee_list_container">
+                <div class="employee_list">
+                    <table class="employee_list_table">
+                        <thead>
+                        <tr>
+                            <td style="width: 12%;">이름</td>
+                            <td style="width: 12%;">아이디</td>
+                            <td style="width: 12%;">직급</td>
+                            <td style="width: 12%;">부서명</td>
+                            <td style="width: 12%;">입사날짜</td>
+                            <td style="width: 12%;">제직상태</td>
+                        </tr>
+                        <tr id="employee_list_empty">
+                            <td colspan="8">직원 리스트가 비여있습니다.</td>
+                        </tr>
+                        </thead>
+                        <tbody id="employee_list_content">
+                            <tr th:each="emp_list : ${list}">
+                                <td th:text="${emp_list.emp_name}"></td>
+                                <td th:text="${emp_list.emp_id}"></td>
+                                <td th:text="${emp_list.emp_rank}"></td>
+                                <td th:text="${emp_list.emp_dept}"></td>
+                                <td th:text="${emp_list.join_date}"></td>
+                                <td th:text="${emp_list.work_status}"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="paging">
+                                <td colspan="6">
+                                    <a th:href="@{show_list_need_complete(page=1)}" style="font-weight: bold;"><div>처음</div></a>
+                                    <a th:href="@{show_list_need_complete(page=${pagination.prevBlock})}" style="font-weight: bold"><div>이전</div></a>
+                                    <th:block th:with="start=${pagination.startPage}, end=${pagination.endPage}">
+                                        <a th:each="pageButton : ${#numbers.sequence(start, end)}" th:href="@{show_list_need_complete(page=${pageButton})}">
+                                            <div th:if="${pagination.selectPage == pageButton}" th:text="${pageButton}" style="color: skyblue; font-weight: bold;"></div>
+                                            <div th:unless="${pagination.selectPage == pageButton}" th:text="${pageButton}"></div>
+                                        </a>
+                                    </th:block>
+                                    <a th:href="@{show_list_need_complete(page=${pagination.nextBlock})}" style="font-weight: bold;"><div>다음</div></a>
+                                    <a th:href="@{show_list_need_complete(page=${pagination.totalPageCnt})}" style="font-weight: bold;"><div>끝</div></a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="~{layout/footer::footer}"></footer>
+    </div>
+    <script src="/js/member/manage_employee_list.js"></script>
+</body>
+</html>

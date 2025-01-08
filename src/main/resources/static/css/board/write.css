@@ -1,0 +1,353 @@
+form {
+
+    padding: 0;
+    margin: 0;
+    display: inline;
+}
+
+
+/* 링크 밑줄 제거*/
+
+a, a:visited, a:hover, a:active, a:link {
+    text-decoration: none;
+}
+
+
+/* 아직 방문하지 않은 링크의 글자색을 정의합니다. */
+a:link { color: black
+
+}
+
+table tr:hover {
+
+    background-color: lightblue;
+}
+
+
+
+#write {
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 auto;
+    float: left;
+    border: 1px solid gainsboro;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+}
+
+/* 타이틀*/
+.write_main {
+    width: 100%;
+    height: 10%;
+    text-align: center;
+    float: left;
+    box-sizing: border-box;
+    /*border: 1px solid black;*/
+    /*background-color: #dc3545;*/
+    border-radius: 10px;
+
+}
+.write_main span {
+    margin-top: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    /*border: 1px solid black;*/
+    border-radius: 10px;
+    font-size: 23px;
+    background-color: #1E90FF;
+    font-weight: bold;
+    color: white;
+}
+.write_writer {
+    box-sizing: border-box;
+   /*border: 1px solid black;*/
+    border-top: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+    /*border-radius: 10px;*/
+    float: left;
+    width: 100%;
+    height: 9%;
+
+
+}
+.write_writer div { /*class: write writer name*/
+    box-sizing: border-box;
+    float: left;
+    /*border: 1px solid black;*/
+    margin-right: 200px;
+    text-align: left;
+    border-radius: 10px;
+}
+#namebox { /* 작성자 input box*/
+    width:200px;
+
+    height: 40px;
+    /*border: 1px solid black;*/
+    /*border-radius: 10px;*/
+}
+#namebox:hover { /* 작성자 input box*/
+   border: 1px solid #1E90FF;
+}
+#namebox:focus { /* 작성자 input box (클릭 시) */
+    border: 1px solid #1E90FF;
+    outline: none; /* 기본 outline 제거 */
+}
+#namebox1 { /* 작성자 input box*/
+    width:200px;
+
+    height: 40px;
+    /*border: 1px solid black;*/
+    /*border-radius: 10px;*/
+}
+
+
+.write_title {
+    box-sizing: border-box;
+    float: left;
+    width: 100%;
+    height: 12%;
+
+}
+
+/*제목*/
+#titlebox {
+
+    width: 100%;
+    height: 100%;
+    /*border: 1px solid black;*/
+    /*border-radius: 10px;*/
+    box-sizing: border-box; /
+}
+/*제목 호버*/
+#titlebox:hover {
+
+
+    border: 1px solid #1E90FF;
+    /*border-radius: 10px;*/
+
+}
+#titlebox:focus { /* title box (클릭 시) */
+    border: 1px solid #1E90FF;
+    outline: none; /* 기본 outline 제거 */
+}
+/*글내용*/
+#contextbox{
+    height: 100%;
+    /*border: 1px solid black;*/
+    /*border-radius: 10px;*/
+    width: 100%;
+    box-sizing: border-box;
+    resize: none; /* 크기 변경 비활성화 */
+}
+#contextbox:hover{
+    border: 1px solid #1E90FF;
+}
+#contextbox:focus{
+    border: 1px solid #1E90FF;
+    outline: none; /* 기본 outline 제거 */
+}
+
+
+
+/* 글 내용 스타일*/
+.write_text {
+    box-sizing: border-box;
+    float: left;
+    width: 100%;
+    height: 43%;
+}
+.write_text_name {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+}
+
+
+/* 제목 박스*/
+.write_title_name {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; /* 수직 배치 */
+    border-bottom: 1px solid gainsboro;
+    /*border-radius: 10px;*/
+    height: 100%;
+    width: 100%;
+
+}
+
+
+/*등록 버튼 컨테이너*/
+.write_button {
+    float: left;
+    width: 100%;
+    height: 10%;
+    border-bottom: 1px solid gainsboro;
+    /*border-radius: 10px;*/
+    box-sizing: border-box;
+
+}
+
+.fileadd_div {
+    display: block;
+    box-sizing: border-box;
+    /*border: 1px solid black;*/
+    /*border-radius: 10px;*/
+    height: 100%;
+    width: 100%;
+
+}
+
+.write_add_btn {
+    background-color: #007bff;
+    border-radius: 10px;
+    height: 100%;
+    width: 7%;
+    font-size: 18px;
+    color: white;
+    border: 1px solid darkblue;
+}
+.write_add_btn:hover {
+    background-color: white;
+    border-radius: 10px;
+    height: 100%;
+    width: 7%;
+    font-size: 18px;
+    color: black;
+    border: 1px solid #007bff;
+    cursor: pointer;
+
+
+}
+.write_files{
+    /*position: relative; !* 요소의 기준 설정 *!*/
+    /*width: 100%; !* 부모의 전체 크기 차지 *!*/
+    min-height: 50px; /* 최소 높이 설정 */
+    box-sizing: border-box;
+    /*border: 1px solid black;*/
+    /*border-radius: 10px;*/
+    /*padding: 10px; !* 내부 여백 추가 *!*/
+    /*overflow: hidden; !* float 문제 해결 *!*/
+    width: 100%; /* 부모의 전체 크기 차지 */
+    display: flex; /* 전체를 가로로 정렬 */
+    flex-wrap: wrap; /* 파일이 많아지면 줄 바꿈 */
+    gap: 10px; /* 요소 간 간격 */
+    margin-top: 10px;
+    border-top: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+
+}
+.write_files_btn_div {
+   /* display: block;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;  */
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: start; !* 버튼을 왼쪽 정렬 *!*/
+    /*height: auto; !* 내부 콘텐츠에 따라 높이 조정 *!*/
+    /*width: 100%;*/
+    display: inline-block;
+    height: auto;
+
+
+
+}
+
+#filebtn {
+    float: left;
+    border-radius: 10px;
+    height: 30px; /* 고정 크기로 설정 */
+    width: auto; /* 고정 크기로 설정 */
+    border: 1px solid black;
+    cursor: pointer; /* 클릭 가능한 버튼임을 표시 */
+    margin-top: 5px; /* 버튼과 상단 간격 */
+
+}
+
+.file_add {
+    display: flex; /* 자식 요소를 수평으로 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 20px; /* 요소 간 간격 */
+    margin-top: 10px; /* 상단 간격 */
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-left: 20px;
+
+
+}
+
+#file_cancelbtn {
+    background-color: #dc3545;
+    border-radius: 10px;
+    border: 1px solid white;
+    cursor: pointer;
+    color: white;
+    padding: 5px 10px; /* 여백 추가 */
+}
+
+footer{
+    width: 1250px;
+    height: 80px;
+    display: inline-block;
+    margin-left: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+section {
+    width: 98%;
+    height: 61%;
+    border: 1px solid gainsboro;
+    border-radius: 15px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mail_container {
+    width: 97.3%;
+    height: 94%;
+    padding: 15px;
+
+}
+/*뒤로가기 버튼*/
+.past {
+    margin-top: 1px;
+    background-color: #007bff;
+    border-radius: 10px;
+    height: 100%;
+    width: 7%;
+    font-size: 18px;
+    color: white;
+    border: 1px solid darkblue;
+}
+
+.past a {
+    color: white; /* 링크 텍스트 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    display: inline-block; /* 블록 요소처럼 동작 */
+    width: 100%; /* 부모 요소에 맞게 확장 */
+    height: 100%; /* 부모 요소 높이에 맞게 확장 */
+}
+
+.past a:hover {
+    color: black; /* 호버 시 텍스트 색상 */
+    background-color: white; /* 호버 시 배경 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.past:hover {
+    background-color: #f0f0f0; /* 마우스 호버 시 배경 색 */
+    color: #000;
+    border-color: #007bff;
+    cursor: pointer;
+}
+

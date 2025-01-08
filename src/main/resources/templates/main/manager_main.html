@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS : 관리자 메인</title>
+    <link rel="stylesheet" href="/css/layout/base.css"/>
+    <link rel="stylesheet" href="/css/main/manager_main.css"/>
+</head>
+<body>
+<div class="main">
+    <header th:replace="~{layout/header_manager::header}"></header>
+    <section>
+        <a href="/board/manager" class="select_one">
+            <div class="select_content">
+                <img src="/img/board.png" alt="Board">
+                <span class="select_label">게시판</span>
+            </div>
+        </a>
+        <a href="/board/manager/gj" class="select_one">
+            <div class="select_content">
+                <img src="/img/page.png" alt="Attendance">
+                <span class="select_label">공지사항 등록</span>
+            </div>
+        </a>
+        <a href="manager_page" class="select_one">
+            <div class="select_content">
+                <img src="/img/profile.png" alt="Employee">
+                <span class="select_label">직원관리</span>
+            </div>
+        </a>
+    </section>
+    <footer th:replace="~{layout/footer::footer}"></footer>
+</div>
+</body>
+</html>

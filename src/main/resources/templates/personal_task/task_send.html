@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>업무 전송</title>
+  <link rel="stylesheet" href="/css/layout/base.css">
+  <link rel="stylesheet" href="/css/personal_task_css/task_send.css">
+</head>
+<body>
+<div class="main">
+  <header th:replace="~{layout/header::header}"></header>
+  <nav th:replace="~{layout/nav::nav}"></nav>
+  <section>
+    <div class="container">
+      <form id="task-form" action="/tasks/send" method="post" enctype="multipart/form-data">
+        <div class="task_content_top">
+          <div class="task_title">
+            <div class="task_title_input">
+              <span>제목</span>
+              <input type="text" placeholder="제목" name="task_title" required>
+            </div>
+          </div>
+          <div class="task_receive">
+            <div class="task_receive_input">
+              <span>받는 사람</span>
+              <input type="text" placeholder="받는 사람" name="receive_id" id="receive_id" required>
+            </div>
+            <div class="task_receive_check">
+              <span id="receive-id-error" class="task_receive_check_name" style="color: red;"></span>
+            </div>
+          </div>
+        </div>
+        <div class="task_content_middle">
+          <textarea class="task_content" placeholder="내용" name="task_content" required></textarea>
+        </div>
+        <div class="task_content_bottom">
+          <div class="task_file">
+            <input type="file" name="task_files" id="file1" accept=".txt, .gif, .jpg, .png, .mp3, .avi, .mkv, .zip">
+            <input type="file" name="task_files" id="file2" accept=".txt, .gif, .jpg, .png, .mp3, .avi, .mkv, .zip">
+            <input type="file" name="task_files" id="file3" accept=".txt, .gif, .jpg, .png, .mp3, .avi, .mkv, .zip">
+          </div>
+          <div class="task_send">
+            <button type="submit" class="send_btn" id="send-button">보내기</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+  <footer th:replace="~{layout/footer::footer}"></footer>
+</div>
+<script src="/js/personal_task/task_send.js"></script>
+</body>
+</html>

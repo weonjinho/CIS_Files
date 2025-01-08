@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cis.personal_task.repository.TaskFileRepository">
+    <!-- 파일 삽입 -->
+    <insert id="insertTaskFile" parameterType="com.cis.personal_task.dto.TaskFileDTO">
+        INSERT INTO task_file (task_num, file_name, file_originname, upload_at)
+        VALUES (#{task_num}, #{file_name}, #{file_originname}, #{upload_at});
+    </insert>
+
+    <!-- 파일 정보 저장 -->
+    <insert id="saveFileInfo">
+        INSERT INTO files (file_name)
+        VALUES (#{fileName})
+    </insert>
+
+    <!-- 파일 정보 삭제 -->
+    <delete id="deleteFileInfo">
+        DELETE FROM files WHERE file_name = #{fileName}
+    </delete>
+</mapper>
+

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.cis.board.repository.IF_Reopository">
+
+    <insert id="insertOne" parameterType="com.cis.board.vo.boardVO">
+        INSERT INTO board_table
+        (category, board_num, board_title, board_content, create_at, emp_id, boardHits, fileAttached)
+        VALUES (#{category},(SELECT cis_seq('board_seq') FROM DUAL),#{board_title},#{board_content},default,#{emp_id},default,#{fileAttached});
+    </insert>
+
+
+    <insert id="insertOne_fr" parameterType="com.cis.board.vo.boardVO">
+        INSERT INTO board_table
+        (category, board_num, board_title, board_content, create_at, emp_id, boardHits, fileAttached)
+        VALUES (#{category},(SELECT cis_seq('board_seq_fr') FROM DUAL),#{board_title},#{board_content},default,#{emp_id},default,#{fileAttached});
+    </insert>
+
+
+    <select id="listAll" resultType="com.cis.board.vo.boardVO">
+        SELECT  board_num,board_title,emp_id, boardHits,
+                DATE_FORMAT(create_at, "%y-%m-%d") AS create_at
+        from board_table
+        where category = '공지사항'
+        order by board_num DESC;
+    </select>
+
+
+
+    <!-- 게시글 업데이트 -->
+    <update id="updateHits" parameterType="int">
+        update board_table set boardHits=boardHits+1 where board_num = #{num}
+    </update>
+    <!-- 게시글하나보기 -->
+    <select id="selectOne" parameterType="int" resultType="com.cis.board.vo.boardVO">
+        select * from board_table
+        where board_num = #{num} and category = '공지사항'
+    </select>
+    <!-- 게시글하나보기 -->
+    <select id="selectOne_fr" parameterType="int" resultType="com.cis.board.vo.boardVO">
+        select * from board_table
+        where board_num = #{num} and category = '자유게시판'
+    </select>
+
+    <!-- 게시글 한개 삭제 -->
+    <delete id="deleteOne" parameterType="int">
+        delete from board_table
+        where board_num = #{number}
+    </delete>
+
+    <!-- 게시글 삭제 new version-->
+    <delete id="deleteOnE" parameterType="com.cis.board.vo.boardVO">
+        delete from board_table
+        where board_num = #{board_num} and category = #{category}
+    </delete>
+    <!-- 게시글 하나 수정 -->
+    <update id="updateOne" parameterType="com.cis.board.vo.boardVO">
+        update board_table
+        set board_title = #{board_title}, board_content=#{board_content}
+        where board_num =#{board_num} and category = #{category}
+    </update>
+<!--    공지사항 게시판 조회-->
+    <select id="fiandAll" parameterType="com.cis.board.vo.searchDTO" resultType="com.cis.board.vo.boardVO">
+        SELECT
+        a.board_num,
+        a.board_title,
+        a.emp_id,
+        a.boardHits,
+        DATE_FORMAT(a.create_at, "%y-%m-%d") AS create_at,
+        m.emp_name
+        FROM
+        board_table a
+        LEFT JOIN
+        employee e ON a.emp_id = e.emp_id
+        LEFT JOIN
+        manager m ON e.resident_num = m.resident_num
+        WHERE
+        a.category = '공지사항'
+        <include refid="search"/>
+        ORDER BY
+        a.board_num DESC
+        LIMIT
+        #{pagination.limitStart}, #{recordSize}
+    </select>
+    <!-- 자유 게시판 조회 -->
+    <select id="fiandAll_fr" parameterType="com.cis.board.vo.searchDTO" resultType="com.cis.board.vo.boardVO">
+        SELECT
+        a.board_num,
+        a.board_title,
+        a.emp_id,
+        a.boardHits,
+        DATE_FORMAT(a.create_at, "%y-%m-%d") AS create_at,
+        m.emp_name
+        FROM
+        board_table a
+        LEFT JOIN
+        employee e ON a.emp_id = e.emp_id
+        LEFT JOIN
+        manager m ON e.resident_num = m.resident_num
+        WHERE
+        a.category = '자유게시판'
+        <include refid="search"/>
+        ORDER BY
+        a.board_num DESC
+        LIMIT
+        #{pagination.limitStart}, #{recordSize}
+    </select>
+
+
+    <!-- 공지사항 게시글 카운트 -->
+    <select id="count" parameterType="com.cis.board.vo.searchDTO" resultType="int">
+        select count(*)
+        from board_table a
+        left join employee e on a.emp_id = e.emp_id
+        left join manager m on e.resident_num = m.resident_num
+        where a.category = '공지사항'
+        <include refid="search"/>
+    </select>
+
+    <!-- 자유 게시판 게시글 카운트 -->
+    <select id="count_fr" parameterType="com.cis.board.vo.searchDTO" resultType="int">
+        select count(*)
+        from board_table a
+        left join employee e on a.emp_id = e.emp_id
+        left join manager m on e.resident_num = m.resident_num
+        where a.category = '자유게시판'
+        <include refid="search"/>
+    </select>
+
+    <!--amd 모든 게시판 조회 -->
+    <select id="findAll_admo" parameterType="com.cis.board.vo.searchDTO" resultType="com.cis.board.vo.boardVO">
+        select *
+        from board_table
+        <include refid="search"/>
+        order by create_at DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
+    </select>
+    <!--  adm - 모든 게시판 게시글 카운트  -->
+    <select id="count_allAdm" parameterType="com.cis.board.vo.searchDTO" resultType="int">
+        SELECT COUNT(*) FROM board_table a
+            inner JOIN employee e ON
+                a.emp_id = e.emp_id inner JOIN manager m
+                    ON e.resident_num = m.resident_num
+        <include refid="search_adm"/>
+    </select>
+
+<!--    관리자 모든 게시판 조회-->
+    <select id="findAll_adm" parameterType="com.cis.board.vo.searchDTO" resultType="com.cis.board.vo.boardVO">
+        select
+        a.category,
+        a.emp_id,
+        a.board_num,
+        a.board_title,
+        a.board_content,
+        DATE_FORMAT(a.create_at, '%Y-%m-%d') as create_at,
+        a.boardHits,
+        a.fileAttached,
+        m.emp_name
+        from board_table a
+        join employee e
+        on a.emp_id = e.emp_id
+        join manager m
+        on e.resident_num = m.resident_num
+        <include refid="search_adm"/>
+        order by create_at DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
+    </select>
+<!--    자유게시판 공지게시판 sql-->
+    <sql id="search">
+        <!-- 검색 키워드 있을때 -->
+        <if test="keyword != null and keyword !=''">
+            <choose>
+                <!-- 검색 유형이 있을 때-->
+                <when test="searchType != null and searchType !=''">
+                    <choose>
+                        <when test="'board_title'.equals(searchType)">
+                            AND a.board_title LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'board_content'.equals(searchType)">
+                            AND a.board_content LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'emp_id'.equals(searchType)">
+                            AND m.emp_name LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                    </choose>
+                </when>
+                <!-- 검색 유형이 없을 때 (전체검색일 때)-->
+                <otherwise>
+                    AND (
+                    a.board_title LIKE CONCAT('%', #{keyword}, '%')
+                    OR a.board_content LIKE CONCAT('%', #{keyword}, '%')
+                    OR m.emp_name LIKE CONCAT('%', #{keyword}, '%')
+                    )
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
+
+    <!--adm 검색 sql -->
+    <sql id="search_adm">
+        <trim prefix="WHERE" prefixOverrides="AND |OR">
+            <!-- 검색 카테고리가 있을 때 -->
+            <if test="searchCategory != null and searchCategory != ''">
+                AND a.category = #{searchCategory}
+            </if>
+
+            <!-- 검색 키워드가 있을 때 -->
+            <if test="keyword != null and keyword != ''">
+                <choose>
+                    <!-- 검색 유형이 있을 때 -->
+                    <when test="searchType != null and searchType != ''">
+                        <choose>
+                            <when test="searchType == 'board_title'">
+                                AND a.board_title LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'board_content'">
+                                AND a.board_content LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                            <when test="searchType == 'emp_id'">
+                                AND m.emp_name LIKE CONCAT('%', #{keyword}, '%')
+                            </when>
+                        </choose>
+                    </when>
+                    <!-- 검색 유형이 없을 때 -->
+                    <otherwise>
+                        AND (
+                        a.board_title LIKE CONCAT('%', #{keyword}, '%')
+                        OR a.board_content LIKE CONCAT('%', #{keyword}, '%')
+                        OR m.emp_name LIKE CONCAT('%', #{keyword}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </trim>
+    </sql>
+
+
+
+    <!-- 게시판 파일 첨부-->
+    <insert id="insertFile" parameterType="com.cis.board.vo.fileVO">
+        INSERT INTO board_file
+        (category, board_num, original_name, save_name, file_size, created_date)
+        SELECT
+            bt.category,
+            #{board_num},
+            #{original_name},
+            #{save_name},
+            #{file_size},
+            NOW()
+        FROM
+            board_table bt
+        WHERE
+            bt.category = #{category}
+            LIMIT 1;
+    </insert>
+    <!-- board_num 가져오기 for 파일첨부 getBoardNum()-->
+    <select id="getBoardNum" resultType="int" parameterType="String">
+        select board_num from board_table
+        where category = #{categoryTemp}
+        order by board_num DESC
+            Limit 1;
+    </select>
+    <!-- 파일 정보 가져오기 selectFile-->
+    <select id="selectFile" parameterType="map" resultType="com.cis.board.vo.fileVO">
+        select * from board_file
+        where board_num = #{num} AND category =#{category};
+    </select>
+    <!--    deleteFile(String fileId)-->
+    <delete id="deleteFile" parameterType="map">
+        delete from board_file
+        where file_id = #{num} AND category = #{category}
+    </delete>
+
+    <!--    파일 정보 가져오기-->
+    <select id="selectFileById" parameterType="map" resultType="com.cis.board.vo.fileVO">
+        SELECT * FROM board_file
+        WHERE file_id = #{num} AND category = #{category}
+    </select>
+    <!-- 관리자게시판 파일 삭제시 파일 정보 가져오기;-->
+    <select id="selectFileBybdNumCategory" parameterType="map" resultType="com.cis.board.vo.fileVO">
+        select * from board_file
+        where board_num = #{board_num} AND category = #{category}
+    </select>
+
+    <!--    댓글 입력하기  insertComentOne(commentVO commentvo)t-->
+    <insert id="insertCommentOne" parameterType="com.cis.board.vo.commentVO">
+        INSERT INTO comment
+            (category, board_num, comment_num, comment_content,emp_id)
+        values (#{category},#{board_num},(SELECT cis_seq('comment_seq') FROM DUAL),#{comment_content},#{emp_id})
+    </insert>
+
+    <!-- 댓글 가져오기  List<commentVO> selectAllCmt(Map<String, Object> params)throws Exception;-->
+    <select id="selectAllCmt" parameterType="Map" resultType="com.cis.board.vo.commentVO">
+        select * FROM comment c
+                          join employee a
+                               on c.emp_id = a.emp_id
+                          join manager b
+                               on a.resident_num = b.resident_num
+        where c.category = #{category} AND c.board_num = #{board_num}
+    </select>
+    <!--                select * from comment-->
+    <!--                where category = #{category} AND board_num = #{board_num}-->
+
+    <!--    boolean deleteCommentByCategoryAndId(Map<String, Object> params)-->
+
+    <delete id="deleteComment" parameterType="Map">
+        DELETE FROM comment WHERE category = #{category} AND comment_num = #{comment_num}
+    </delete>
+
+    <!--    getCmtByparamsOne 삭제시 파일 정보 확인-->
+    <select id="getCmtByparamsOne" parameterType="map" resultType="com.cis.board.vo.commentVO">
+        SELECT *
+        FROM comment
+        WHERE category = #{category}
+          AND comment_num = #{comment_num}
+    </select>
+
+    <!-- employee테이블의 emp_id를 넘기고 manager 테이블에서 name 리턴;-->
+    <select id="getNameById" parameterType="String" resultType="String">
+        SELECT m.emp_name
+        FROM employee e
+                 JOIN manager m
+                      on e.resident_num = m.resident_num
+        WHERE e.emp_id = #{emp_id}
+    </select>
+
+
+
+
+
+
+</mapper>

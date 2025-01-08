@@ -1,0 +1,108 @@
+section{
+    width: 98%;
+    height: 67%;
+    border: 1px solid #EBEBEB;
+    border-radius: 15px;
+    padding: 10px;
+    float: left;
+    margin-top: 30px;
+}
+
+.employee_list_container{
+    width: 97.3%;
+    height: 94%;
+    padding: 0 15px 15px 15px;
+}
+
+.employee_list{
+    border: 1px solid #cccccc;
+}
+
+.employee_list_table{
+    width: 100%;
+}
+
+.employee_list_table thead, .employee_list_table tbody, .employee_list_table tfoot{
+    text-align: center;
+}
+
+.employee_list_table tr td{
+    border: 1px solid #cccccc;
+    padding: 10px;
+}
+
+.employee_list_table thead tr{
+    background-color: #0070BB;
+
+}
+
+
+
+.employee_list_table thead tr td{
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.employee_detail_info{
+    color:black;
+    text-decoration: none;
+    display: block;
+}
+
+.employee_list_table tbody tr:hover .employee_detail_info{
+    color: #666666;
+}
+
+.paging td a{
+    color: black;
+    text-decoration: none;
+}
+
+
+tfoot td{
+    width: 100px;
+}
+
+
+.paging td a{
+    color: #000000;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    margin: 0 10px;
+}
+
+.paging td a div{
+    width: 50px;
+    border: 1px solid #666666;
+    border-radius: 15px;
+    padding: 5px 10px;
+    display: inline-block;
+}
+
+.paging td div:hover{
+    background-color: #AAE0F8;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+
+
+#search_part form{
+    padding-top: 10px;
+}
+
+#employee_list_content tr:hover{
+    background-color: #76ABDF;
+    color: white;
+}
+
+#employee_list_content tr a:hover{
+    color: white;
+    font-size: 20px;
+}
+
+#employee_list_content tr a{
+    color: black;
+    text-decoration-line: none;
+}

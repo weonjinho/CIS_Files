@@ -1,0 +1,56 @@
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.3.5'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.cis'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// 이메일 인증 dependencies 추가_원진호_1204 추가
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	// Redis 추가_원진호_1206 추가
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	// 이메일 인증 dependencies 추가_원진호_1206 추가
+	implementation 'javax.mail:mail:1.4.7'
+	// Spring Context Support_원진호_1206 추가
+	implementation 'org.springframework:spring-context-support:5.3.9'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
+	// Validation 라이브러리 추가_원진호_1206 추가
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// 페이지헬퍼 추가 - 심지수
+	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cis.member.repository.IF_MemberDao">
+    <!--  아이디 중복 체크  -->
+    <select id="check_id" resultType="int" parameterType="String">
+        select count(*)
+        from employee e left outer join manager m
+                                        on e.resident_num = m.resident_num
+        where e.emp_id=#{id}
+    </select>
+
+    <!-- 일반사원 등록(insert) -->
+    <update id="insert_employee" parameterType="com.cis.member.dto.EmployeeDTO">
+        update employee set emp_id=#{emp_id}, resident_num=#{resident_num}, emp_pass=#{emp_pass}, emp_email=#{emp_email}, post_addr=#{post_addr}, road_addr=#{road_addr}, detail_addr=#{detail_addr}, role='USER'
+        where resident_num=#{resident_num}
+    </update>
+
+
+
+
+
+    <!-- 페이지별로 모든 정보가 담겨있는 전체 사원 리스트 조회 -->
+    <select id="selectAll" resultType="com.cis.member.dto.ManagerEmployeeDTO" parameterType="int">
+        select *
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+        where e.emp_id NOT LIKE 'null'
+        LIMIT #{startIndex},#{pageSize}
+    </select>
+
+    <!-- "전체 시원 리스트"에서 검색창에서 이름으로 특정 사원에 정보를 조회 -->
+    <select id="selectSearch" resultType="com.cis.member.dto.ManagerEmployeeDTO" parameterType="String">
+        select *
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+        where m.emp_name=#{input_name}
+    </select>
+
+    <!-- 모든 정보가 등록된 사원의 전체 인원수 조회 -->
+    <select id="count_employee" resultType="int">
+        select count(*)
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+    </select>
+
+    <!-- 아이디로 사원 한명의 모든 정보 조회 -->
+    <select id="selectOne" resultType="com.cis.member.dto.EmployeeDTO" parameterType="String">
+        select *
+        from employee
+        where emp_id=#{id}
+    </select>
+
+    <!--콤보박스 부서 선택.-->
+    <select id="select_dept_list" resultType="com.cis.member.dto.ManagerEmployeeDTO" parameterType="Object">
+        select *
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+        where m.emp_dept=#{department}
+        LIMIT #{startIndex},#{pageSize}
+    </select>
+
+    <!--콤보박스 재직상태 선택.-->
+    <select id="select_work_status_list" resultType="com.cis.member.dto.ManagerEmployeeDTO" parameterType="Object">
+        select *
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+        where m.work_status=#{work_status}
+        LIMIT #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 전체 사원 리스트에서 이름을 클릭해 한명에 사원에 모든 정보를 조회. -->
+    <select id="select_one_employee_info" resultType="com.cis.member.dto.ManagerEmployeeDTO" parameterType="String">
+        select *
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+        where m.emp_name=#{emp_name}
+    </select>
+
+    <!-- 관리자가 정보추가가 필요한 한명의 사원의 정보를 추가(update) -->
+    <!-- 관리자 사원 정보 수정(퇴사처리) -->
+    <update id="modify_employee_info" parameterType="String" >
+        update manager set  work_status=#{work_status}
+        where resident_num=#{rrn}
+    </update>
+
+
+    <!-- 관리자의 추가적인 정보등록이 필요한 사원들의 전체 리스트 -->
+    <select id="select_manager_add_info" resultType="com.cis.member.dto.ManagerEmployeeDTO" parameterType="int">
+        select *
+        from employee e left outer join manager m
+                                        on e.resident_num = m.resident_num
+        where m.emp_dept='111'
+        LIMIT #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 관리자가 정보를 추가할 한명에 사원에 정보를 조회 -->
+    <select id="select_one_employee_info_need_complete" resultType="com.cis.member.dto.ManagerEmployeeDTO" parameterType="String">
+        select *
+        from employee e left outer join manager m
+                                        on e.resident_num = m.resident_num
+        where e.emp_id=#{id}
+    </select>
+
+    <!-- 관리자가 보충한 정보를 update -->
+    <insert id="update_complete_employee_info" parameterType="com.cis.member.dto.ManagerEmployeeDTO">
+        insert into manager values (#{resident_num}, #{emp_name}, #{emp_dept}, #{emp_rank}, #{join_date}, #{work_status})
+    </insert>
+
+    <!-- 로그인한 사원의 모든 정보를 조회 -->
+    <select id="select_login_employee_info" parameterType="String" resultType="com.cis.member.dto.ManagerEmployeeDTO">
+        select *
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+        where e.emp_id=#{id}
+    </select>
+
+    <!-- 전체 리스트 갯수 -->
+    <select id="total_employee_count" resultType="int">
+        select count(*)
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+    </select>
+
+    <!-- 정보 추가가 필요한 사원의 전체 인원수 -->
+    <select id="total_count_need_add_info_employee" resultType="int">
+        select count(*)
+        from employee e left outer join manager m
+                                        on e.resident_num = m.resident_num
+        where m.emp_dept is null
+    </select>
+
+    <!-- 전체 사원리스트에서 콤보박스로 선택한 부서의 인원수 -->
+    <select id="total_selected_dept_employee_count" parameterType="String" resultType="int">
+        select count(*)
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+        where m.emp_dept=#{dept}
+    </select>
+
+    <!-- 전체 사원리스트에서 콤보박스로 선택한 재직상태의 인원수 -->
+    <select id="total_selected_work_status_employee_count" parameterType="String" resultType="int">
+        select count(*)
+        from employee e inner join manager m
+                                   on e.resident_num = m.resident_num
+        where m.work_status=#{work_status}
+    </select>
+
+    <!-- ================= -->
+    <!-- 관리자 신규 사원 등록 -->
+    <insert id="manager_insert_new_employee_info" parameterType="com.cis.member.dto.ManagerDTO">
+        insert into manager values (#{resident_num}, #{emp_name}, #{emp_dept}, #{emp_rank}, #{join_date}, #{work_status})
+    </insert>
+
+    <!-- 관리자가 등록한 사원에 주민번호를 employee 태이블에서 삽입. -->
+    <insert id="insert_new_employee_rrn_in_employee" parameterType="String">
+        insert into employee values (#{r_num},#{rrn},'111','111','111', '111', '111', 'USER')
+    </insert>
+
+    <select id="select_list_need_complete" resultType="com.cis.member.dto.ManagerEmployeeDTO" parameterType="int">
+        select *
+        from employee e left outer join manager m
+                                        on e.resident_num = m.resident_num
+        where e.emp_email = '111'
+        LIMIT #{startIndex},#{pageSize}
+    </select>
+
+    <select id="count_employee_need_complete" resultType="int">
+        select count(*)
+        from employee e left outer join manager m
+                                        on e.resident_num = m.resident_num
+        where e.emp_email = '111'
+    </select>
+
+
+
+
+
+</mapper>

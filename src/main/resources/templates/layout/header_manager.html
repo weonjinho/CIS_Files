@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header">
+    <div class="header_left">
+        <a href="/manager_main_page">
+            <img src="/img/logo.jpg" alt="Logo" class="logo_img">
+            <div>
+                <span class="logo_text">CIS Company</span>
+            </div>
+        </a>
+    </div>
+    <div class="header_right">
+        <div>
+            <!-- thymeleaf 추가_원진호_1203 -->
+            <span class="login_user" th:text="|${session.emp_name} 님|"></span>
+        </div>
+        <!-- action 추가, method 지정, input type "submit" 으로 변경_원진호_1203 -->
+        <form action="/logout_btn" method="post">
+            <input type="submit" value="로그아웃" class="logout_btn">
+        </form>
+    </div>
+</header>
+</html>

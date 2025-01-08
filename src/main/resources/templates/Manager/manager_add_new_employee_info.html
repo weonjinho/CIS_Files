@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자_신규 사원정보 등록</title>
+    <!-- base 화면 css -->
+    <link rel="stylesheet" href="/css/layout/base.css">
+    <!-- ajax 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .main section div h1{
+            margin-left: 500px;
+        }
+        .main section form{
+            text-align: right;
+            margin-right: 450px;
+            font-size: 20px;
+            padding-top: 20px;
+        }
+        .main section form div{
+            margin-top: 20px;
+        }
+
+        .main section form div input{
+            font-size: 20px;
+        }
+
+        #cancel_btn{
+            width: 150px;
+            height: 50px;
+            font-size: 20px;
+            border-radius: 30px;
+            margin-left: 20px;
+        }
+        #add_new_employee{
+            width: 150px;
+            height: 50px;
+            font-size: 20px;
+            border-radius: 30px;
+            margin-left: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <header th:replace="~{layout/header::header}"></header>
+        <section>
+            <div>
+                <h1>관리자 신규사원 등록</h1>
+            </div>
+            <form action="manager_input_new_employe_info" method="post">
+                <div>
+                    <label for="manager_input_rrn">주민등록 번호</label>
+                    <input type="text" id="manager_input_rrn" name="resident_num"><br/>
+                </div>
+
+                <div>
+                    <label for="manager_input_emp_name">사원이름</label>
+                    <input type="text" id="manager_input_emp_name" name="emp_name"><br/>
+                </div>
+
+                <div>
+                    <label for="manager_input_emp_dept">부서명</label>
+                    <input type="text" id="manager_input_emp_dept" name="emp_dept"><br/>
+                </div>
+
+                <div>
+                    <label for="manager_input_emp_rank">직급</label>
+                    <input type="text" id="manager_input_emp_rank" name="emp_rank"><br/>
+                </div>
+
+                <div>
+                    <label for="manager_input_join_date">입사날짜</label>
+                    <input type="text" id="manager_input_join_date" name="join_date"><br/>
+                </div>
+
+<!--                <div>-->
+<!--                    <label for="manager_input_work_status">재직상태</label>-->
+<!--                    <input type="text" id="manager_input_work_status" name="work_status"><br/>-->
+<!--                </div>-->
+
+                <div id="work_status">
+                    <span>제직상태</span>
+                    <label for="is_working"></label>
+                    <input type="checkbox" name="work_status" class="work_status" id="is_working" style="width: 105px" />재직중
+                    <label for="leave_work"></label>
+                    <input type="checkbox" name="work_status" class="work_status" id="leave_work" style="width: 105px" />퇴직
+                </div>
+
+
+                <div>
+                    <input type="button" id="cancel_btn" onclick="location.href='/manager_page'" value="취소">
+                    <input type="submit" id="add_new_employee" value="가입">
+                </div>
+            </form>
+        </section>
+        <footer th:replace="layout/footer::footer"></footer>
+    </div>
+    <script>
+        let a = $('.work_status');
+        let b = $('#is_working');
+        let c = $('#leave_work');
+        if(a.val() === '재직중'){
+            b.prop('checked',true);
+            c.prop('checked',false);
+        }else if(a.val() === '퇴사'){
+            // alert("퇴사...")
+            c.prop('checked',true);
+            b.prop('checked',false);
+        }
+        let aa = document.querySelector("#is_working");
+        let bb = document.querySelector("#leave_work");
+        document.querySelector("#is_working").addEventListener("click",()=>{
+            aa.checked = true;
+            bb.checked = false;
+            aa.value = "재직중";
+        })
+        document.querySelector("#leave_work").addEventListener("click", ()=>{
+            aa.checked = false;
+            bb.checked = true;
+            bb.value = "퇴사";
+        })
+    </script>
+</body>
+</html>

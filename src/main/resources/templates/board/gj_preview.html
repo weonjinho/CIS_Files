@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS : 공지게시판 글 보기</title>
+    <link rel="stylesheet" href="/css/layout/base.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/board/write.css">
+    <link rel="stylesheet" type="text/css" href="/css/board/preview.css">
+    <link rel="stylesheet" type="text/css" href="/css/board/modal_comment.css">
+    <script src="https://kit.fontawesome.com/ae15ba340d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="main">
+    <header th:replace="~{layout/header::header}"></header>
+    <nav th:replace="~{layout/nav::nav}"></nav>
+    <section>
+        <div class="mail_container">
+            <div id="write">
+                <div class="write_main"><span>공지사항</span></div>
+                <input type="text" value="공지사항" readonly hidden="true" name="category" id="categoryId">
+                <div class="write_writer">
+                    <div class="write_writer_name">
+                        <label for="namebox">작성자</label>
+                        <input type="text" id="namebox" placeholder="작성자" readonly
+                               th:value="${boardvo.emp_id}">
+                        <!-- th:value="${boardvo.emp_id} "-->
+
+                    </div>
+
+                </div>
+                <div class="write_title">
+                    <div class="write_title_name">
+                        <label for="titlebox" class="title_font" hidden="hidden">제목</label>
+                        <input type="text" id="titlebox" placeholder="제목을 입력하시오" readonly
+                               th:value="${boardvo.board_title}" name="board_title" required>
+                        <!--  th:value="${boardvo.board_title}" -->
+                    </div>
+
+                </div>
+                <div class="write_text">
+                    <div class="write_text_name">
+                        <label for="contextbox" class="context_font" hidden="hidden">글내용</label>
+                        <textarea id="contextbox" placeholder="내용을 입력하시오 " readonly
+                                  th:text="${boardvo.board_content}" name="board_content" required>
+
+                </textarea>
+                        <!--th:text="${boardvo.board_content}"-->
+                    </div>
+
+                </div>
+                <div class="files_container">
+                    <div class="files_btn_div">
+                        <ul id="fileListUl">
+                            <li style="display: none">
+                                <label for="addbutton" hidden>파일 추가:</label>
+                                <input type="button" id="addbutton" value="파일추가" hidden>
+                            </li>
+                            <li th:each="fList: ${fileList}" th:data-file-id="${fList.file_id}">
+                                <a th:href="@{/fr_preview/{board_num}/{file_num}/{category}(board_num=${fList.board_num}, file_num=${fList.file_id}, category=${fList.category})}"
+                                   th:text="${fList.original_name}">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 파일 업로드 컨테이너 -->
+                </div>
+
+                <div class="update_delete_container">
+                    <div class="update_delete_div">
+                        <input type="button" value="목록" onclick="btnlist()">
+                        <input type="submit" value="수정" id="modifybtn" th:if="${loginFlag}">
+                        <input type="submit" value="삭제" id="delbtn" th:if="${loginFlag}">
+                    </div>
+                </div>
+
+                <div class="comment_div">
+
+                    <!-- 댓글 확인 버튼 -->
+
+                    <input type="button" id="check_comment" value="댓글 확인">
+
+                </div>
+
+                <!-- 댓글 모달 -->
+
+                <div id="commentModal" class="modal">
+                    <div class="modal-content">
+                        <span id="closeModal" class="close">&times;</span>
+                        <h2>댓글</h2>
+                        <div id="modalCommentList">
+                            <!-- 댓글 리스트가 여기에 로드 -->
+                        </div>
+                        <form id="modalCommentForm"><!--이름 보이게하고 id hidden -->
+                            <input type="text" id="modalCommentWriterH" name="emp_id" hidden="hidden" th:value="${loggedId}">
+                            <input type="text" id="modalCommentWriter" name="emp_name" required th:value="${loggedNanme}" readonly>
+                            <textarea name="comment_content" id="modalCommentArea" placeholder="댓글은 최대 50글자" maxlength="50" required></textarea>
+                            <input type="submit" value="댓글 등록" class="modal-comment-btn">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer th:replace="~{layout/footer::footer}"></footer>
+</div>
+</body>
+<script src="/js/board/board_gj_preview.js"></script>
+<script src="/js/board/board_comment.js"></script>
+
+</html>

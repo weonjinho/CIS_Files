@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS : 자유게시판 글쓰기</title>
+    <link rel="stylesheet" href="/css/layout/base.css"/>
+    <link rel="stylesheet" href="/css/board/board_base.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/board/write.css">
+    <script src="https://kit.fontawesome.com/ae15ba340d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="main">
+    <header th:replace="~{layout/header::header}"></header>
+    <nav th:replace="~{layout/nav::nav}"></nav>
+    <section>
+        <div class="mail_container">
+            <div id="write">
+                <form action="/board_write_one" method="post" enctype="multipart/form-data">
+                    <div class="write_main"><span>자유게시판</span></div>
+                    <input type="text" value="자유게시판" readonly hidden="true" name="category">
+                    <div class="write_writer"> <!--작성자 div -->
+                        <div class="write_writer_name">
+                            <label for="namebox">작성자</label><!--name="emp_id"-->
+                            <input type="text" id="namebox" placeholder="작성자이름" th:value="${emp_name}"
+                                   th:data-emp-id="${emp_id}" readonly>
+                            <label for="hidden_empid" hidden="hidden"></label>
+                            <input type="text" id="hidden_empid" name="emp_id" th:value="${emp_id}" hidden="hidden" readonly>
+                        </div>
+                    </div>
+                    <div class="write_title">
+                        <div class="write_title_name">
+                            <label for="titlebox" hidden="hidden"><span class="titleSpan">제목</span></label>
+                            <input type="text" id="titlebox" name="board_title" required maxlength="50" placeholder="제목을 입력하시오 / 50자 제한">
+                        </div>
+
+                    </div>
+                    <div class="write_text">
+                        <div class="write_text_name">
+                            <label for="contextbox" hidden="hidden"><span class="contextSpan">글내용</span></label>
+                            <textarea id="contextbox" name="board_content" required placeholder="내용을 입력하시오 / 200자 제한" maxlength="200"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="write_files">
+                        <div class="write_files_btn_div"><input type="button" value="파일추가" id="filebtn"> </div>
+                    </div>
+
+                    <div class="write_button">
+                        <div class="fileadd_div">
+                            <button class="past" type="button" onclick="history.back()">
+                                <i class="fa-solid fa-arrow-rotate-left">뒤로</i>
+                            </button>
+                            <button class="write_add_btn" type="submit">
+                                <i class="fa-solid fa-pencil">등록</i>
+                            </button>
+<!--                            <input class="write_add_btn" type="submit" value="등록">-->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <footer th:replace="~{layout/footer::footer}"></footer>
+</div>
+</body>
+<script src="/js/board/write_gj.js"></script>
+
+</html>

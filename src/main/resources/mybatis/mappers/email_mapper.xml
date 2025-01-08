@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cis.email.repository.IF_EmailRepository">
+
+    <insert id="emailInsert" parameterType="EmailDTO">
+        INSERT INTO email
+            VALUES ((SELECT cis_seq('email_seq') FROM DUAL),
+                #{mail_title},
+                #{mail_content},
+                DEFAULT,
+                DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i'),
+                #{recipient_id},
+                #{sender_id})
+    </insert>
+    <select id="emailSelectAll" resultType="EmailDTO">
+        SELECT * FROM email AS m INNER JOIN employee AS e
+            <trim prefix="ON" prefixOverrides="AND | OR">
+                <choose>
+                    <when test="pagination.filter == 'unread' or pagination.filter == 'read'">
+                        m.recipient_id=e.emp_id AND m.recipient_id=#{login_emp} AND m.mail_check=#{mail_check}
+                    </when>
+                    <when test="pagination.filter == 'send'">
+                        m.sender_id=e.emp_id AND m.sender_id=#{login_emp}
+                    </when>
+                    <otherwise>
+                        m.recipient_id=e.emp_id AND m.recipient_id=#{login_emp}
+                    </otherwise>
+                </choose>
+            </trim>
+            ORDER BY m.mail_num DESC, m.create_at DESC
+            LIMIT #{pagination.startIndex}, #{pagination.pageSize}
+    </select>
+    <select id="emailSelectOne" resultType="EmailDTO">
+        SELECT * FROM email AS m INNER JOIN employee AS e
+            ON m.recipient_id=e.emp_id
+                AND (m.recipient_id=#{login_emp} OR m.sender_id=#{login_emp})
+                AND m.mail_num=#{email_num}
+    </select>
+    <select id="emailSelectOrderOne" resultType="string">
+        SELECT m.mail_num FROM email AS m INNER JOIN employee AS e
+            ON m.recipient_id=e.emp_id
+                AND (m.recipient_id=#{recipient_id} OR m.sender_id=#{sender_id})
+            ORDER BY m.mail_num DESC LIMIT 1
+    </select>
+    <select id="emailSelectAllCnt" resultType="int">
+        SELECT COUNT(*) FROM email AS m INNER JOIN employee AS e
+            <trim prefix="ON" prefixOverrides="AND | OR">
+                <choose>
+                    <when test="filter == 'unread'">
+                        m.recipient_id=e.emp_id AND m.recipient_id=#{login_emp} AND m.mail_check='N'
+                    </when>
+                    <when test="filter == 'read'">
+                        m.recipient_id=e.emp_id AND m.recipient_id=#{login_emp} AND m.mail_check='Y'
+                    </when>
+                    <when test="filter == 'send'">
+                        m.sender_id=e.emp_id AND m.sender_id=#{login_emp}
+                    </when>
+                    <otherwise>
+                        m.recipient_id=e.emp_id AND m.recipient_id=#{login_emp}
+                    </otherwise>
+                </choose>
+            </trim>
+    </select>
+    <update id="emailUpdate" parameterType="string">
+        UPDATE email AS m INNER JOIN employee AS e
+            ON m.recipient_id=e.emp_id AND m.recipient_id=#{login_emp}
+            SET m.mail_check='Y'
+            WHERE m.mail_num=#{email_num}
+    </update>
+    <delete id="emailDelete" parameterType="string">
+        DELETE m FROM email AS m INNER JOIN employee AS e
+            ON m.recipient_id=e.emp_id AND m.recipient_id=#{login_emp}
+            WHERE m.mail_num=#{email_num}
+    </delete>
+    <insert id="emailFileInsert" parameterType="list">
+        INSERT INTO email_file
+            VALUES <foreach item="file" collection="list" separator=",">
+                (#{file.mail_num},
+                #{file.file_name},
+                #{file.file_originname},
+                #{file.file_size},
+                DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i'))
+            </foreach>
+    </insert>
+    <select id="emailNumFind" parameterType="string" resultType="EmailFileDTO">
+        SELECT * FROM email_file AS f INNER JOIN email AS m
+            ON f.mail_num=m.mail_num AND f.mail_num=#{mail_num}
+            ORDER BY f.upload_at
+    </select>
+    <select id="emailFileNameFind" parameterType="list" resultType="EmailFileDTO">
+        SELECT * FROM email_file AS f INNER JOIN email AS m
+            ON f.mail_num=m.mail_num AND f.file_name=
+            <foreach item="name" collection="list" open="(" separator="," close=")">
+                #{name.file_name}
+            </foreach>
+            ORDER BY f.upload_at
+    </select>
+    <select id="emailFileFind" resultType="EmailFileDTO">
+        SELECT * FROM email_file AS f INNER JOIN email AS m
+            ON f.mail_num=m.mail_num AND f.file_name=#{file_name}
+    </select>
+    <select id="findEmployeeId" resultType="string">
+        SELECT e.emp_id FROM employee AS e
+            WHERE e.emp_id=#{emp_id}
+    </select>
+    <select id="findEmployeeName" resultType="string">
+        SELECT m.emp_name FROM manager AS m INNER JOIN employee AS e
+            ON m.resident_num=e.resident_num AND e.emp_id=#{emp_id}
+    </select>
+
+</mapper>

@@ -1,0 +1,127 @@
+input:focus, textarea:focus {
+    outline: none;
+}
+section {
+    width: 98%;
+    height: 61%;
+    border: 1px solid #CCCCCC;
+    border-radius: 15px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.task_container {
+    width: 97.3%;
+    height: 94%;
+    padding: 0 15px 15px 15px;
+}
+.task_btn {
+    padding: 3px 10px 10px 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.task_btn input {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
+    margin-right: 25px;
+    padding: 10px;
+    cursor: pointer;
+}
+.task_btn a{
+    text-decoration-line:none;
+}
+.task_check {
+    background-color: rgb(118, 145, 255);
+    color: white;
+    border: 1px solid rgb(118, 145, 255);
+}
+.task_check:hover {
+    background-color:rgb(179, 226, 238);
+    border: 1px solid rgb(179, 226, 238);
+}
+.task_send {
+    background-color: dodgerblue;
+    color: white;
+    border: 1px solid dodgerblue;
+}
+.task_send:hover, .task_view:hover, .task_allread:hover, .task_progress:hover, .task_complete:hover{
+    background-color: skyblue;
+    border: 1px solid skyblue;
+}
+.task_list {
+    border: 1px solid #CCCCCC;
+    text-decoration: none;
+}
+.task_table {
+    width: 100%;
+}
+.task_table thead, .task_table tbody, .task_table tfoot {
+    text-align: center;
+}
+.task_table tr td {
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+    text-decoration: none;
+}
+.task_table thead tr td {
+    font-size: 20px;
+    font-weight: bold;
+}
+.task_content td a{
+    text-decoration: none;
+}
+.task_allread {
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+.task_progress {
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+.task_complete{
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+}
+.task_table tbody tr:hover{
+    color: #666666;
+    font-weight: bold;
+    text-decoration: none;
+}
+/*.task_table tbody td:hover{*/
+/*    color: #666666;*/
+/*    */
+/*}*/
+.all_check, .one_check {
+    width: 30px;
+    height: 30px;
+}
+.paging td a:hover, .paging td span:hover {
+    background-color: skyblue;
+    border: 1px solid skyblue;
+}
+.paging span, .paging a{
+    border: 1px solid #CCCCCC;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 15px;
+    padding: 5px 10px;
+    margin: 0 10px;
+    display: inline-block;
+    width: auto;
+    height: auto;
+}

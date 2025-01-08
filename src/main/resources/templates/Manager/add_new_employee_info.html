@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사원정보 수정</title>
+    <link rel="stylesheet" href="/css/layout/base.css">
+    <link rel="stylesheet" href="/css/member_css/employee_list.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        h1{
+            text-align: center;
+        }
+        .modify_employee_info{
+            text-align: right;
+            margin-right: 300px;
+        }
+
+        .modify_input_content{
+            margin-right: 100px;
+        }
+
+        .modify_btn{
+            width: 100%;
+        }
+
+
+        .modify_btn div input{
+            width: 150px;
+            height: 30px;
+            font-size: 20px;
+            border-radius: 30px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="main">
+    <header th:replace="~{layout/header::header}"></header>
+    <section>
+        <div class="employee_list_container">
+            <div class="employee_list">
+                <div>
+                    <h1>관리자 - 사원 등록</h1>
+                </div>
+                <div class="modify_employee_info">
+                    <form action="add_new_employee" method="post">
+                        <div class="modify_input_content">
+                            <div>
+                                <label for="employee_name" >이름</label>
+                                <input type="text" name="emp_name" id="employee_name" th:value="${need_complete_one_employee_info.emp_name}">
+                            </div>
+
+                            <div>
+                                <label for="employee_id">아이디</label>
+                                <input type="text" id="employee_id" name="emp_id" th:value="${need_complete_one_employee_info.emp_id}" readonly><br/>
+                            </div>
+
+                            <div>
+                                <label>주민등록번호</label>
+                                <input type="text" id="employee_resident_num" name="resident_num" th:value="${need_complete_one_employee_info.resident_num}" readonly><br/>
+                            </div>
+
+                            <div>
+                                <span>직급</span>
+                                <select class="form-select2" id="work_rank" name="emp_rank">
+                                    <option value="intern">인턴</option>
+                                    <option value="staff">사원</option>
+                                    <option value="assistant_manager">대리</option>
+                                    <option value="manager">과장</option>
+                                    <option value="team_manager">팀장</option>
+                                    <option value="director">임원</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <span>부서명</span>
+                                <select class="form-select" id="departmentCode" name="emp_dept">
+                                    <option value="business">영업팀</option>
+                                    <option value="program">개발팀</option>
+                                    <option value="technology">기술팀</option>
+                                    <option value="planning">기획팀</option>
+                                    <option value="accounting">회계팀</option>
+                                    <option value="human_resources">인사팀</option>
+                                </select>
+                            </div>
+
+
+                            <div>
+                                <span>입사날짜</span>
+                                <label for="dates"></label>
+                                <input type="date" id="dates" max="2300-12-31" min="1900-01-01" name="join_date" style="width: 100px" th:value="${one_employee_info.join_date}"/><br/>
+                            </div>
+
+
+
+                            <div id="work_status">
+                                <span>제직상태</span>
+                                <label for="is_working"></label>
+                                <input type="checkbox" name="work_status" class="work_status" id="is_working" style="width: 105px" th:value="${need_complete_one_employee_info.work_status}" />재직중
+                                <label for="leave_work"></label>
+                                <input type="checkbox" name="work_status" class="work_status" id="leave_work" style="width: 105px"  th:value="${need_complete_one_employee_info.work_status}" />퇴직
+                            </div>
+
+                        </div>
+
+                        <div class="modify_btn">
+                            <div>
+                                <input type="button" value="취소" id="cancel_change_btn">
+                                <input type="submit" value="확인" id="change_employee_info_btn">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer th:replace="~{layout/footer::footer}"></footer>
+</div>
+<script src="/CIS_manager_page_js/js/manage_employee_list.js"></script>
+<script>
+    let a = $('.work_status');
+    let b = $('#is_working');
+    let c = $('#leave_work');
+
+    if(a.val() === '재직중'){
+        // alert("재직중...")
+        b.prop('checked',true);
+        c.prop('checked',false);
+    }else if(a.val() === '퇴사'){
+        // alert("퇴사...")
+        c.prop('checked',true);
+        b.prop('checked',false);
+    }
+
+    let aa = document.querySelector("#is_working");
+    let bb = document.querySelector("#leave_work");
+    document.querySelector("#is_working").addEventListener("click",()=>{
+        aa.checked = true;
+        bb.checked = false;
+        aa.value = "재직중";
+    })
+
+    document.querySelector("#leave_work").addEventListener("click", ()=>{
+        aa.checked = false;
+        bb.checked = true;
+        bb.value = "퇴사";
+    })
+</script>
+</body>
+</html>

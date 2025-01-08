@@ -1,0 +1,96 @@
+body{
+    background-color: #76ABDF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+.container{
+    display: flex;
+    width: 1000px;
+    height: 700px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+#left{
+    background-color: #FFFFFF;
+    width: 50%;
+    height: 100%;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    display: inline-block;
+    text-align: center;
+}
+#right{
+    background-color: #FFFFFF;
+    width: 50%;
+    height: 100%;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: inline-block;
+    text-align: center;
+}
+.employee_login{
+    width: 80%;
+    height: 45%;
+    background-color: #224C98;
+    text-align: center;
+    border-radius: 30px;
+    margin-top: 170px;
+    margin-left: 30px;
+    display: inline-block;
+}
+.manager_login{
+    width: 80%;
+    height: 45%;
+    background-color: #7289DA;
+    text-align: center;
+    border-radius: 30px;
+    margin-top: 170px;
+    margin-right: 30px;
+    display: inline-block;
+}
+#eloginBtn{
+    width: 200px;
+    height: 50px;
+    font-size: 25px;
+    border-radius: 50px;
+    margin-top: 30px;
+}
+#mloginBtn{
+    width: 200px;
+    height: 50px;
+    font-size: 25px;
+    border-radius: 50px;
+    margin-top: 30px;
+}
+.employee_login_content{
+    margin-top: 70px;
+    color : white;
+}
+
+
+.loginBase{
+    background-color: #FF416C;
+    width: 400px;
+    height: 500px;
+    margin-top: 100px;
+    border-radius: 30px;
+    margin-left: 300px;
+}
+
+.back_btn{
+    text-align: left;
+    margin-left: 10px;
+}
+
+.loginBtnSet{
+    margin: auto;
+    margin-top: 30px;
+}
+.manager_login_content{
+    margin-top: 70px;
+    color: white;
+}

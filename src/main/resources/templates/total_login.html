@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/member_css/total_login.css">
+</head>
+
+<body>
+<div class="container">
+    <!-- "일반사원" 로그인 선택. -->
+    <div id="left">
+        <div class="employee_login">
+            <div class="employee_login_content">
+                <h2>사원 로그인</h2>
+                <span>일반사원분들이 로그인 하는 곳입니다.</span><br/>
+            </div>
+            <div class="loginBtnSet">
+                <input type="button" onclick="location.href='/employee_login'" value="Login" id="eloginBtn" required>
+            </div>
+        </div>
+    </div>
+    <!-- "관리자" 로그인 선택. -->
+    <div id="right">
+        <div class="manager_login">
+            <div class="manager_login_content">
+                <h2>관리자 로그인</h2>
+                <span>관리자분들이 로그인 하는 곳입니다.</span><br/>
+            </div>
+            <div class="loginBtnSet">
+                <input type="button" onclick="location.href='/check_manager_pass'" value="Login" id="mloginBtn" required>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

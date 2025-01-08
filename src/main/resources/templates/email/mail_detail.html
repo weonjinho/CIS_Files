@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS : 메일 보기</title>
+    <link rel="stylesheet" href="/css/layout/base.css"/>
+    <link rel="stylesheet" href="/css/email/mail_detail.css"/>
+</head>
+<body>
+    <div class="main">
+        <header th:replace="~{layout/header::header}"></header>
+        <nav th:replace="~{layout/nav::nav}"></nav>
+        <section>
+            <div class="mail_container">
+                <div class="mail_content_top">
+                    <div class="mail_title">
+                        <span>제목</span>
+                        <input type="text" th:value="${email_one.mail_title}" readonly>
+                    </div>
+                    <div class="mail_people">
+                        <div class="mail_recipient">
+                            <span>발신인</span>
+                            <input type="text" alt="Recipient" th:value="${email_one.sender_id}" readonly>
+                        </div>
+                        <div class="mail_sender">
+                            <span>수신인</span>
+                            <input type="text" alt="Sender" th:value="${email_one.recipient_id}" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="mail_content_middle">
+                    <textarea class="mail_content" th:text="${email_one.mail_content}" readonly></textarea>
+                </div>
+                <div class="mail_content_bottom">
+                    <div id="mail_files" class="mail_files">
+                        <th:block th:each="files : ${email_files}">
+                            <a th:text="${files.file_originname}"
+                               th:href="|@{email_detail/}${email_one.mail_num}@{/files/}${filesStat.count}@{/}${files.file_name}@{/download}|">
+                            </a>
+                        </th:block>
+                    </div>
+                    <div class="mail_delete">
+                        <form th:action="@{email_delete(num=${email_one.mail_num})}" method="post">
+                            <input type="submit" value="삭제하기" class="delete_btn">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="~{layout/footer::footer}"></footer>
+    </div>
+</body>
+</html>

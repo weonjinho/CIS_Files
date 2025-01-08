@@ -1,0 +1,75 @@
+body{
+    background-color: #76ABDF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+.container{
+    display: flex;
+    width: 1000px;
+    height: 700px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.back_btn{
+    text-align: left;
+    margin-left: 10px;
+}
+
+/* --------------------------------------------- */
+/* 관리자 비밀번호 확인 */
+#manager_pass_check{
+    background-color: #7289DA;
+    width: 400px;
+    height: 350px;
+    margin-top: 170px;
+    border-radius: 30px;
+    margin-left: 300px;
+}
+
+.manager_pass_content label{
+    font-size: 17px;
+}
+.manager_pass_content input{
+    width: 300px;
+    height: 50px;
+    border-radius: 30px;
+}
+#submit_pass{
+    width: 200px;
+    height: 50px;
+    border-radius: 30px;
+    font-size: 25px;
+}
+
+#backBtn2{
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    border-radius: 50px;
+    margin-top: 10px;
+}
+
+.manager_pass_content{
+    margin-top: 40px;
+    margin-left: 50px;
+    width: 307px;
+    height: 100px;
+    color: white;
+    font-weight: bolder;
+}
+.manager_pass_content label{
+    margin-left: 15px;
+}
+
+.manager_pass_content input{
+    margin-top: 10px;
+}
+
+.manager_pass_btn input{
+    margin-left: 100px;
+    margin-top: 30px;
+}

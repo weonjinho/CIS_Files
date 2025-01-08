@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS : 메일 보내기</title>
+    <link rel="stylesheet" href="/css/layout/base.css"/>
+    <link rel="stylesheet" href="/css/email/mail_send.css"/>
+</head>
+<body>
+    <div class="main">
+        <header th:replace="~{layout/header::header}"></header>
+        <nav th:replace="~{layout/nav::nav}"></nav>
+        <section>
+            <div class="mail_container">
+                <form action="email_insert"  method="post" enctype="multipart/form-data" id="email_send">
+                    <div class="mail_content_top">
+                        <div class="mail_title">
+                            <div class="mail_title_input">
+                                <span>제목</span>
+                                <input type="text" placeholder="제목" name="mail_title">
+                            </div>
+                        </div>
+                        <div class="mail_recipient">
+                            <div class="mail_recipient_input">
+                                <span>받는 사람</span>
+                                <input type="text" placeholder="받는 사람" name="recipient_id">
+                            </div>
+                            <div class="mail_recipient_check">
+                                <span class="mail_recipient_check_name">받는 사람의 아이디를 입력해주세요.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mail_content_middle">
+                        <textarea class="mail_content" placeholder="내용" name="mail_content"></textarea>
+                    </div>
+                    <div class="mail_content_bottom">
+                        <div class="mail_file">
+                            <input type="file" name="mail_files" onchange="select_file(this)" accept=".txt, .gif, .jpg, .png, .mp3, .avi, .mkv, .zip">
+                            <input type="file" name="mail_files" onchange="select_file(this)" accept=".txt, .gif, .jpg, .png, .mp3, .avi, .mkv, .zip">
+                            <input type="file" name="mail_files" onchange="select_file(this)" accept=".txt, .gif, .jpg, .png, .mp3, .avi, .mkv, .zip">
+                        </div>
+                        <div class="mail_send">
+                            <input type="button" value="보내기" class="send_btn">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <footer th:replace="~{layout/footer::footer}"></footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="/js/email/mail_send.js"></script>
+</body>
+</html>

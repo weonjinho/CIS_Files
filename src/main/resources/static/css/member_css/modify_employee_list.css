@@ -1,0 +1,100 @@
+section{
+    height : 620px;
+}
+
+.employee_list{
+    height: 610px;
+}
+
+.employee_list div{
+    text-align: right;
+    margin-right: 120px;
+    margin-top: 20px;
+}
+
+.employee_list div h1{
+    margin-right: 500px;
+    width: 750px;
+}
+
+.employee_list div span{
+    width: 300px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+#date{
+    margin-right: 202px;
+}
+
+/*이름*/
+#employee_name{
+    margin-left: 50px;
+}
+
+/*아이디*/
+#employee_id{
+    margin-left: 50px;
+}
+
+/*부서명*/
+#departmentCode{
+    margin-right: 160px;
+    margin-left: 50px;
+    font-size: 20px;
+}
+
+/*직급*/
+#work_rank{
+    margin-right: 178px;
+    margin-left: 55px;
+    font-size: 20px;
+}
+
+
+/*날짜*/
+#dates{
+    margin-right: 65px;
+    margin-left: 50px;
+    padding-left: 37px;
+    padding-right: 37px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/*재직상태*/
+#work_status{
+    margin-right: 85px;
+}
+
+
+.modify_input_content{
+    font-size: 20px;
+    height: 400px;
+    padding-top:50px;
+}
+
+.modify_input_content div:nth-of-type(1){
+    margin-top: 45px;
+    margin-left: 200px;
+}
+
+.modify_input_content input{
+    text-align: left;
+}
+
+.modify_btn div input{
+    margin-right: 60px;
+}
+
+#cancel_change_btn{
+    width: 200px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+#change_employee_info_btn{
+    width: 200px;
+    height: 30px;
+    border-radius: 30px;
+}

@@ -1,0 +1,115 @@
+section {
+    width: 98%;
+    height: 61%;
+    border: 1px solid #EBEBEB;
+    border-radius: 15px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mail_container {
+    width: 97.3%;
+    height: 94%;
+    padding: 0 15px 15px 15px;
+}
+.mail_btn {
+    padding: 3px 10px 10px 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mail_btn input {
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
+    margin-right: 25px;
+    padding: 10px;
+
+    cursor: pointer;
+}
+.mail_delete {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    border: 1px solid #FF0000;
+}
+.mail_delete:hover {
+    background-color: #FF6347;
+    border: 1px solid #FF6347;
+}
+.mail_send {
+    background-color: #1E90FF;
+    color: #FFFFFF;
+    border: 1px solid #1E90FF;
+}
+.mail_view {
+    border: 1px solid #CCCCCC;
+}
+.mail_send:hover, .mail_view:hover {
+    background-color: #AAE0F8;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+.mail_list {
+    border: 1px solid #CCCCCC;
+}
+.mail_table {
+    width: 100%;
+}
+.mail_table thead, .mail_table tbody, .mail_table tfoot {
+    text-align: center;
+}
+.mail_table tr td {
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+}
+.mail_table thead tr td {
+    font-size: 20px;
+    font-weight: bold;
+}
+.mail_detail_unread {
+    color: #000000;
+    font-weight: bold;
+    text-decoration: none;
+
+    display: block;
+}
+.mail_detail_read {
+    color: #000000;
+    text-decoration: none;
+
+    display: block;
+}
+.mail_table tbody tr:hover .mail_detail_unread {
+    color: #666666;
+    font-weight: bold;
+}
+.mail_table tbody tr:hover .mail_detail_read {
+    color: #666666;
+}
+.all_check, .one_check {
+    width: 30px;
+    height: 30px;
+}
+.paging td a {
+    color: #000000;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    margin: 0 10px;
+}
+.paging td a div {
+    width: 50px;
+    border: 1px solid #CCCCCC;
+    border-radius: 15px;
+    padding: 5px 10px;
+
+    display: inline-block;
+}
+.paging td div:hover {
+    background-color: #AAE0F8;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}

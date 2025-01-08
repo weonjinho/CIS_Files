@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS : 메일</title>
+    <link rel="stylesheet" href="/css/layout/base.css"/>
+    <link rel="stylesheet" href="/css/email/mail.css"/>
+</head>
+<body>
+    <div class="main">
+        <header th:replace="~{layout/header::header}"></header>
+        <nav th:replace="~{layout/nav::nav}"></nav>
+        <section>
+            <div class="mail_container">
+                <div class="mail_btn">
+                    <a th:href="@{email_send}"><input type="button" value="메일쓰기" class="mail_send"></a>
+                    <input type="button" value="메일삭제" class="mail_delete">
+
+                    <!-- if 조건문 방식 -->
+                    <a th:if="${pagination.filter == 'all' || #strings.isEmpty(pagination.filter)}" th:href="@{email(filter=all)}">
+                        <input type="button" value="전체보기" class="mail_view" style="background-color: #9AADEE; color: #FFFFFF;">
+                    </a>
+                    <a th:unless="${pagination.filter == 'all' || #strings.isEmpty(pagination.filter)}" th:href="@{email(filter=all)}">
+                        <input type="button" value="전체보기" class="mail_view">
+                    </a>
+                    <a th:if="${pagination.filter == 'unread'}" th:href="@{email(filter=unread)}">
+                        <input type="button" value="안읽은메일보기" class="mail_view" style="background-color: #9AADEE; color: #FFFFFF;">
+                    </a>
+                    <a th:unless="${pagination.filter == 'unread'}" th:href="@{email(filter=unread)}">
+                        <input type="button" value="안읽은메일보기" class="mail_view">
+                    </a>
+                    <a th:if="${pagination.filter == 'read'}" th:href="@{email(filter=read)}">
+                        <input type="button" value="읽은메일보기" class="mail_view" style="background-color: #9AADEE; color: #FFFFFF;">
+                    </a>
+                    <a th:unless="${pagination.filter == 'read'}" th:href="@{email(filter=read)}">
+                        <input type="button" value="읽은메일보기" class="mail_view">
+                    </a>
+                    <a th:if="${pagination.filter == 'send'}" th:href="@{email(filter=send)}">
+                        <input type="button" value="보낸메일보기" class="mail_view" style="background-color: #9AADEE; color: #FFFFFF;">
+                    </a>
+                    <a th:unless="${pagination.filter == 'send'}" th:href="@{email(filter=send)}">
+                        <input type="button" value="보낸메일보기" class="mail_view">
+                    </a>
+
+                    <!-- switch/case 조건문 방식 -->
+                    <!--
+                    <th:block th:switch="${pagination.filter}">
+                        <th:block th:case="unread">
+                            <a th:href="@{email(filter=all)}"><input type="button" value="전체보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=unread)}"><input type="button" value="안읽은메일보기" class="mail_view" style="background-color: #9AADEE; color: #FFFFFF;"></a>
+                            <a th:href="@{email(filter=read)}"><input type="button" value="읽은메일보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=send)}"><input type="button" value="보낸메일보기" class="mail_view"></a>
+                        </th:block>
+                        <th:block th:case="read">
+                            <a th:href="@{email(filter=all)}"><input type="button" value="전체보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=unread)}"><input type="button" value="안읽은메일보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=read)}"><input type="button" value="읽은메일보기" class="mail_view" style="background-color: #9AADEE; color: #FFFFFF;"></a>
+                            <a th:href="@{email(filter=send)}"><input type="button" value="보낸메일보기" class="mail_view"></a>
+                        </th:block>
+                        <th:block th:case="send">
+                            <a th:href="@{email(filter=all)}"><input type="button" value="전체보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=unread)}"><input type="button" value="안읽은메일보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=read)}"><input type="button" value="읽은메일보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=send)}"><input type="button" value="보낸메일보기" class="mail_view" style="background-color: #9AADEE; color: #FFFFFF;"></a>
+                        </th:block>
+                        <th:block th:case="*">
+                            <a th:href="@{email(filter=all)}"><input type="button" value="전체보기" class="mail_view" style="background-color: #9AADEE; color: #FFFFFF;"></a>
+                            <a th:href="@{email(filter=unread)}"><input type="button" value="안읽은메일보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=read)}"><input type="button" value="읽은메일보기" class="mail_view"></a>
+                            <a th:href="@{email(filter=send)}"><input type="button" value="보낸메일보기" class="mail_view"></a>
+                        </th:block>
+                    </th:block>
+                    -->
+
+                </div>
+                <div class="mail_list">
+                    <table class="mail_table">
+                        <thead>
+                            <tr>
+                                <td style="width: 5%;"><input type="checkbox" class="all_check"></td>
+                                <td style="width: 65%;">제목</td>
+                                <td style="width: 15%;">보낸 사람</td>
+                                <td style="width: 15%;">날짜 / 시간</td>
+                            </tr>
+                            <tr id="mail_empty">
+                                <td colspan="4">메일이 비어있습니다.</td>
+                            </tr>
+                        </thead>
+                        <tbody id="mail_content">
+                            <tr th:each="email : ${email_list}">
+                                <td><input type="checkbox" class="one_check" th:value="${email.mail_num}"></td>
+                                <th:block th:if="${email.mail_check} == 'Y'">
+                                    <td><a th:href="@{email_detail(num=${email.mail_num})}" class="mail_detail_read" th:text="${email.mail_title}"></a></td>
+                                    <td><a th:href="@{email_detail(num=${email.mail_num})}" class="mail_detail_read" th:text="${email.sender_id}"></a></td>
+                                    <td><a th:href="@{email_detail(num=${email.mail_num})}" class="mail_detail_read" th:text="${email.create_at.substring(0, 16)}"></a></td>
+                                </th:block>
+                                <th:block th:unless="${email.mail_check} == 'Y'">
+                                    <td><a th:href="@{email_detail(num=${email.mail_num})}" class="mail_detail_unread" th:text="${email.mail_title}"></a></td>
+                                    <td><a th:href="@{email_detail(num=${email.mail_num})}" class="mail_detail_unread" th:text="${email.sender_id}"></a></td>
+                                    <td><a th:href="@{email_detail(num=${email.mail_num})}" class="mail_detail_unread" th:text="${email.create_at.substring(0, 16)}"></a></td>
+                                </th:block>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="paging">
+                                <td colspan="4">
+                                    <a th:href="@{email(filter=${pagination.filter},page=1)}" style="font-weight: bold;"><div>처음</div></a>
+                                    <a th:href="@{email(filter=${pagination.filter},page=${pagination.prevBlock})}" style="font-weight: bold;"><div>이전</div></a>
+                                    <th:block th:with="start=${pagination.startPage}, end=${pagination.endPage}">
+                                        <a th:each="pageButton : ${#numbers.sequence(start, end)}" th:href="@{email(filter=${pagination.filter},page=${pageButton})}">
+                                            <div th:if="${pagination.selectPage == pageButton}" th:text="${pageButton}" style="background-color: #9AADEE; color: #FFFFFF; font-weight: bold;"></div>
+                                            <div th:unless="${pagination.selectPage == pageButton}" th:text="${pageButton}"></div>
+                                        </a>
+                                    </th:block>
+                                    <a th:href="@{email(filter=${pagination.filter},page=${pagination.nextBlock})}" style="font-weight: bold;"><div>다음</div></a>
+                                    <a th:href="@{email(filter=${pagination.filter},page=${pagination.totalPageCnt})}" style="font-weight: bold;"><div>끝</div></a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="~{layout/footer::footer}"></footer>
+    </div>
+    <script src="/js/email/mail.js"></script>
+</body>
+</html>

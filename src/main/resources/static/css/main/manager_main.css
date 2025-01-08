@@ -1,0 +1,47 @@
+section {
+    width: 98%;
+    height: 69%;
+    border: 1px solid #EBEBEB;
+    border-radius: 15px;
+    margin-top: 10px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.select_one {
+    color: black;
+    text-decoration: none;
+    width: 30%;
+    height: 50%;
+    border: 1px solid #EBEBEB;
+    border-radius: 15px;
+    margin: 10px 14px;
+    padding: 15px 20px;
+}
+.select_one:hover {
+    background-color: #9AADEE;
+    color: #FFFFFF;
+}
+.select_one img {
+    width: 150px;
+    height: 150px;
+}
+.select_content {
+    margin-top: 50px;
+}
+.select_content * {
+    margin: auto;
+
+    display: block;
+    text-align: center;
+}
+.select_content span {
+    font-size: 30px;
+    margin-top: 20px;
+}
+.select_label {
+    font-size: 20px;
+    font-weight: bold;
+}

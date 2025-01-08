@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cis.attendance.repository.IF_AttendanceRepository">
+
+    <insert id="attendanceInsert" parameterType="AttendanceDTO">
+        INSERT INTO attendance
+            VALUES (#{emp_id},
+                DATE_FORMAT(NOW(), '%H:%i'),
+                NULL,
+                DATE_FORMAT(NOW(), '%Y-%m-%d'),
+                NULL,
+                NULL,
+                #{late_check})
+    </insert>
+    <select id="attendanceSelectAll" resultType="AttendanceDTO">
+        SELECT * FROM attendance AS a INNER JOIN employee AS e
+            ON a.emp_id=e.emp_id AND a.emp_id=#{login_emp}
+            ORDER BY a.work_date DESC
+            LIMIT #{pagination.startIndex}, #{pagination.pageSize}
+    </select>
+    <update id="attendanceUpdate" parameterType="AttendanceDTO">
+        UPDATE attendance AS a INNER JOIN employee AS e
+            ON a.emp_id=e.emp_id AND a.emp_id=#{emp_id}
+            SET a.work_end=#{work_end}, a.work_total=#{work_total}, a.significant=#{significant}
+            WHERE a.work_date=#{work_date}
+    </update>
+    <select id="attendanceSelectAllCnt" resultType="int">
+        SELECT COUNT(*) FROM attendance AS a INNER JOIN employee AS e
+            ON a.emp_id=e.emp_id AND a.emp_id=#{login_emp}
+    </select>
+    <select id="attendanceWorkStartCheck" resultType="int">
+        SELECT COUNT(*) FROM attendance AS a INNER JOIN employee AS e
+            ON a.emp_id=e.emp_id AND a.emp_id=#{login_emp} AND a.work_date=#{now_date}
+    </select>
+    <select id="attendanceWorkEndCheck" resultType="int">
+        SELECT COUNT(*) FROM attendance AS a INNER JOIN employee AS e
+            ON a.emp_id=e.emp_id AND a.emp_id=#{login_emp}
+                AND a.work_date=#{now_date} AND a.work_end IS NULL
+    </select>
+    <select id="attendanceWorkStartTime" resultType="String">
+        SELECT a.work_start FROM attendance AS a INNER JOIN employee AS e
+            ON a.emp_id=e.emp_id AND a.emp_id=#{login_emp} AND a.work_date=#{now_date}
+    </select>
+
+</mapper>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사원등록_사원용</title>
+    <link rel="stylesheet" href="/css/layout/base.css">
+    <link rel="stylesheet" href="/css/member_css/employee_list.css">
+    <link rel="stylesheet" href="/css/member_css/join.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="main">
+    <header th:replace="~{layout/header::header}"></header>
+    <section>
+        <div id="add_new_employee">
+            <h1>사원등록_사원용</h1>
+            <form action="employee_join" method="post">
+                <div id="new_employee_info">
+                    <div id="employee_rrn_info">
+                        <label for="employee_rrn">주민등록 번호</label><br/>
+                        <input type="text" id="employee_rrn" style="width: 250px;" name="resident_num" onchange="check_rrn()">
+                        <span id="rrn_message" style=" color: black;">주민번호를 양식에 맞게 입력하세요.</span><br/>
+                    </div>
+
+                    <div id="employee_id_info">
+                        <label for="employee_id">아이디</label><br/>
+                        <input type="text" id="employee_id" name="emp_id" style="width: 250px;">
+                        <input type="button" id="dulicate_id_check" name="check_id" style="width: 90px;" value="중복체크" onclick="check_input_id()"><br/>
+                        <span id="id_check_message" style="color: black; margin-left: 40px;">아이디 중복 확인 메시지.</span>
+                    </div>
+
+
+                    <div id="employee_pass_info">
+                        <label for="employee_pass">비밀번호</label><br/>
+                        <input type="password" id="employee_pass" name="emp_pass" style="width: 250px;" onchange="check_pass_reg()"><br/>
+                    </div>
+
+                    <div id="employee_check_pass_info">
+                        <label for="employee_pass_check">비밀번호 확인</label><br/>
+                        <input type="password" id="employee_pass_check" name="employee_pass_check" style="width: 250px;">
+                        <span id="pass_not_match" style="color: black; margin-left: 10px;">비밀번호 확인.</span>
+                    </div>
+
+                    <div id="employee_email_info">
+                        <label for="employee_email">이메일</label><br/>
+                        <input type="email" id="employee_email" name="emp_email" style="width: 250px;">
+                        <input type="button" id="verify_email" style="width: 90px;" value="이메일 인증"><br/>
+                    </div>
+
+                    <div id="employee_addr_info">
+                        <input type="text" id="post_addr" name="post_addr" style="width: 145px;">
+                        <input type="button" id="find_post_addr" style="width: 120px" value="우편번호 찾기" onclick="road_btn()"><br/>
+                        <input type="text" id="road_name_addr" name="road_addr" value="도로명 주소" style="width: 250px;"><br/>
+                        <input type="text" id="detail_addr" name="detail_addr" value="상세주소" style="width: 250px;"><br/>
+                    </div>
+
+                    <div id="add_employee_btn_set">
+                        <input type="button" id="cancel_btn" style="width: 150px; height: 50px; font-size: 20px" value="취소">
+                        <input type="submit" id="submit_btn" style="width: 150px; height: 50px; font-size: 20px" value="가입" onclick="show_addr_result()">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <footer th:replace="~{layout/footer::footer}"></footer>
+</div>
+
+<script>
+    // 주민등록 번호 체크 boolean
+    let check_rrn_boolean = false;
+    // 아이디 유효성 체크 boolean
+    let check_id_boolean = false;
+    // 비밀번호 유효성 체크 boolean
+    let check_pass_boolean = false;
+
+    function check_rrn(){
+        let input_rrn = document.getElementById('employee_rrn').value;
+        const regExp = /^\d{6}-\d{7}$/;
+        if(regExp.test(input_rrn)){
+            $('#rrn_message').html("사용가능한 주민등록 번호입니다.").css("color","green");
+            check_rrn_boolean = true;
+        }else{
+            $('#rrn_message').html("사용 불가능한 주민등록 번호입니다.").css("color","red");
+            $('#employee_id').attr("readonly", true);
+            $('#employee_pass').attr("readonly", true);
+            $('#employee_pass_check').attr("readonly", true);
+            $('#employee_email').attr("readonly", true);
+            $('#post_addr').attr("readonly", true);
+            $('#road_name_addr').attr("readonly", true);
+            $('#detail_addr').attr("readonly", true);
+            check_rrn_boolean = false;
+        }
+    }
+
+    // 아이디 중복 체크.
+    document.getElementById('dulicate_id_check').addEventListener("click",()=>{
+        let id = document.getElementById('employee_id').value;
+        const id_regExp = /^[a-z0-9]{1,12}$/;
+        if(id_regExp.test(id)){
+            $.ajax({
+                async : true,
+                url : 'ajaxStr',
+                type : "post",
+                data : {id},
+                dataType : "text",
+                success : function (data){
+                    let a = Number(data);
+                    if(a>0){
+                        $('#id_check_message').html(id + '는 이미 사용중입니다.').css("color","red");
+                        check_rrn_boolean = false;
+                    }else{
+                        $('#id_check_message').html(id + '는 사용가능합니다.').css("color","green");
+                        check_rrn_boolean = true;
+                    }
+                },
+                error:function (e){
+                    alert("전송 실패 : " + e);
+                }
+            })
+        }else{
+            alert("아이디는 소문자, 숫자만 포함하며, 길이는 12글자 이내이고, 한글은 입력 불가입니다.")
+            $('#employee_id').val("");
+        }
+    })
+
+    // 비밀번호 정규표현식 체크.
+    function check_pass_reg(){
+        const regExp_pass = /^(?=.*[a-z])(?=.*[0-9])(?=.*[\W_])[a-z0-9\W_]{8,20}$/;
+        let input_password = document.getElementById('employee_pass').value;
+        if(regExp_pass.test(input_password)){
+            alert('사용 가능한 비밀번호입니다.')
+            check_pass_boolean = true;
+        }else{
+            alert('사용 불가 비번');
+            check_pass_boolean = false;
+        }
+    }
+
+    // 비밀번호 유효성 체크
+    document.getElementById('employee_pass_check').addEventListener('keyup',(e) => {
+        let input_pass = document.getElementById('employee_pass').value;
+        let check_pass = document.getElementById('employee_pass_check').value;
+        if(input_pass === check_pass){
+            document.getElementById('pass_not_match').innerHTML = "<span id='pass_not_match' style='color: green;'>사용가능한 비밀번호입니다.</span>";
+        }else{
+            document.getElementById('pass_not_match').innerHTML = "<span id='pass_not_match' style='color: red;'>비밀번호 불일치입니다.</span>";
+        }
+    })
+
+
+    // 이메일 인증
+    document.getElementById('verify_email').addEventListener("click", ()=>{
+        alert("email 111");
+        let email = document.getElementById('employee_email').value;
+        let email_data = {email:email};
+        alert(email);
+        $.ajax({
+            async: true,
+            url : 'mailSend',
+            type: 'post',
+            data : JSON.stringify(email_data),
+            dataType: 'json',
+            contentType : 'application/json',
+            success : function (data){
+                console.log("email 인증 연결 성공!!!");
+            },
+            error : function (e){
+                console.log("email 전송 실패 : " + e);
+            }
+        })
+    })
+
+</script>
+
+<!-- 우편번호 daum api -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function road_btn(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 우편번호
+                document.getElementById('post_addr').value = data.zonecode;
+                // 도로명 및 지번주소
+                document.getElementById("road_name_addr").value = data.roadAddress;
+                // 상세 주소
+                document.getElementById("detail_addr").value = "";
+                document.getElementById("detail_addr").focus();
+            }
+        }).open();
+    }
+    // "가입"버튼의 활성화 여부.
+    // if(check_rrn_boolean || check_id_boolean || check_pass_boolean){
+    //     $('#submit_btn').attr("disable", true);
+    // }else{
+    //     $('#submit_btn').attr("disable", false);
+    // }
+</script>
+
+</body>
+</html>
+
+
